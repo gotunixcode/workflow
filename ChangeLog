@@ -1,6 +1,9 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Added workflow/__init__.py
+ * Added workflow.py
+ * Updated changelog
  * Added requirements.txt
  * Updated changelog
  * Added Header
