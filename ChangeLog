@@ -1,5 +1,8 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Renamed TODO.md -> TODO
+ * Added TODO.md
+ * Added changelog.sh
  * Added LICENSE and push.sh
  * Added README.md, .gitignore (Python) files
