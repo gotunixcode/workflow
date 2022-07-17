@@ -1,6 +1,12 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Added workflow/childern/destroy.py
+ * Added workflow/childern/deploy.py
+ * Added workflow/childern/build.py
+ * Added workflow/childern/__init__.py
+ * Added workflow/configuration.py
+ * Updated changelog
  * Added workflow/__init__.py
  * Added workflow.py
  * Updated changelog
