@@ -1,0 +1,32 @@
+CHANGELOG
+----------------------
+[version/0.1.0]
+ * Added workflow/parent/destroy.py
+ * Added workflow/parent/deploy.py
+ * Added workflow/parent/build.py
+ * Added workflow/parent/__init__.py
+ * Added workflow/core/update.py
+ * Added workflow/core/main.py
+ * Added workflow/core/exceptions.py
+ * Added workflow/core/kubernetes.py
+ * Added workflow/core/docker.py
+ * Added workflow/core/common.py
+ * Updated changelog
+ * Added workflow/childern/destroy.py
+ * Added workflow/childern/deploy.py
+ * Added workflow/childern/build.py
+ * Added workflow/childern/__init__.py
+ * Added workflow/configuration.py
+ * Updated changelog
+ * Added workflow/__init__.py
+ * Added workflow.py
+ * Updated changelog
+ * Added requirements.txt
+ * Updated changelog
+ * Added Header
+ * Updated changelog
+ * Renamed TODO.md -> TODO
+ * Added TODO.md
+ * Added changelog.sh
+ * Added LICENSE and push.sh
+ * Added README.md, .gitignore (Python) files
