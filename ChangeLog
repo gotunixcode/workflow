@@ -1,0 +1,5 @@
+CHANGELOG
+----------------------
+[version/0.1.0]
+ * Added LICENSE and push.sh
+ * Added README.md, .gitignore (Python) files
