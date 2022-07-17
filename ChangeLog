@@ -1,6 +1,8 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Added Header
+ * Updated changelog
  * Renamed TODO.md -> TODO
  * Added TODO.md
  * Added changelog.sh
