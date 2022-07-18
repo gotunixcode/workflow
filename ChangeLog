@@ -1,6 +1,8 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Convert print_message to private in Messages class
+ * Updated changelog
  * Adding addtional messages exceptions
  * Updated changelog
  * Added Messages class to workflow/core/common.py
