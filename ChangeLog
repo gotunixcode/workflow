@@ -1,6 +1,10 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Updated list_to_string function to use exceptions
+ * Added InputExceptions
+ * Adding RunCommands exceptions
+ * Updated changelog
  * Convert print_message to private in Messages class
  * Updated changelog
  * Adding addtional messages exceptions
