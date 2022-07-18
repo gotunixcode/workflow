@@ -1,6 +1,8 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Fixed broke import
+ * Updated changelog
  * Updated list_to_string function to use exceptions
  * Added InputExceptions
  * Adding RunCommands exceptions
