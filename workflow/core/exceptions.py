@@ -49,5 +49,17 @@ class MessagesExceptions(object):
 
 
 class InputExceptions(object):
-    class ExpectedList(Exception):
+    class ListExpected(Exception):
+        pass
+
+    class DictExpected(Exception):
+        pass
+
+    class StringExpected(Exception):
+        pass
+
+    class IntExpected(Exception):
+        pass
+
+    class BoolExpected(Exception):
         pass

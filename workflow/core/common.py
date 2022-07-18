@@ -44,7 +44,8 @@ try:
     # Workflow Modules
     from workflow.core.exceptions import (
         RunCommandsException,
-        MessagesExceptions
+        MessagesExceptions,
+        InputExceptions
     )
 
 except ImportError as error:
@@ -52,20 +53,16 @@ except ImportError as error:
     exit(1)
 
 
-def list_to_string(input_list):
-    try:
-        assert(isinstance(input_list, list))
+def list_to_string(input_list=None):
+    if input_list is None:
+        raise(InputExceptions.ExpectedList())
 
-    except AssertionError:
-        error_message = "Input was not a list"
-        message = Messages(error)
-        message.crit()
-
-        return None
-
-    else:
+    if type(input_list) is list:
         string = " "
         return(string.join(input_list))
+
+    else:
+        raise(InputExceptions.ExpectedList())
 
 
 class Colors:
