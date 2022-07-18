@@ -32,8 +32,12 @@
 ###############################################################################
 
 
-class RunCommandsException(Exception):
-    pass
+class RunCommandsExceptions(object):
+    class InvalidCommand(Exception):
+        pass
+
+    class RunFailure(Exception):
+        pass
 
 
 class MessagesExceptions(object):
