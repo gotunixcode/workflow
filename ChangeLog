@@ -2,20 +2,14 @@ CHANGELOG
 ----------------------
 [version/0.1.0]
  * Fixed broke import
- * Updated changelog
  * Updated list_to_string function to use exceptions
  * Added InputExceptions
  * Adding RunCommands exceptions
- * Updated changelog
  * Convert print_message to private in Messages class
- * Updated changelog
  * Adding addtional messages exceptions
- * Updated changelog
  * Added Messages class to workflow/core/common.py
- * Updated changelog
  * Added RunCommandsException and MessagesException to workflow/core/exceptions.py
  * Added Colors class to workflow/core/common.py
- * Updated changelog
  * Added workflow/parent/destroy.py
  * Added workflow/parent/deploy.py
  * Added workflow/parent/build.py
@@ -26,22 +20,16 @@ CHANGELOG
  * Added workflow/core/kubernetes.py
  * Added workflow/core/docker.py
  * Added workflow/core/common.py
- * Updated changelog
  * Added workflow/childern/destroy.py
  * Added workflow/childern/deploy.py
  * Added workflow/childern/build.py
  * Added workflow/childern/__init__.py
  * Added workflow/configuration.py
- * Updated changelog
  * Added workflow/__init__.py
  * Added workflow.py
- * Updated changelog
  * Added requirements.txt
- * Updated changelog
  * Added Header
- * Updated changelog
  * Renamed TODO.md -> TODO
  * Added TODO.md
- * Added changelog.sh
  * Added LICENSE and push.sh
  * Added README.md, .gitignore (Python) files
