@@ -46,3 +46,8 @@ class MessagesExceptions(object):
 
     class InvalidMessage(Exception):
         pass
+
+
+class InputExceptions(object):
+    class ExpectedList(Exception):
+        pass
