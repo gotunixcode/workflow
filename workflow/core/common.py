@@ -114,18 +114,16 @@ class Messages(object):
     def __init__(self, message=None, pipeline=True):
         if message is None:
             raise(MessagesExceptions.EmptyMessage())
-#            raise(MessagesException("Empty message"))
 
         if type(message) is str:
             self.message = message
 
         else:
             raise(MessagesExceptions.InvalidMessage())
-#            raise(MessagesException("Provided message was not a string"))
 
         self.pipeline = pipeline
 
-    def print_message(self):
+    def __print_message(self):
         if self.pipeline:
             print("[{0}] - {1}".format(
                 self.message_type,
@@ -150,7 +148,7 @@ class Messages(object):
             Colors.reset
         )
 
-        self.print_message()
+        self.__print_message()
 
     def warn(self):
         self.colors = "{0}{1}".format(
@@ -163,7 +161,7 @@ class Messages(object):
             Colors.reset
         )
 
-        self.print_message()
+        self.__print_message()
 
     def crit(self):
         self.colors = "{0}{1}".format(
@@ -176,7 +174,7 @@ class Messages(object):
             Colors.reset
         )
 
-        self.print_message()
+        self.__print_message()
 
 
 class RunCommands(object):
