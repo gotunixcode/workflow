@@ -43,7 +43,7 @@ try:
 
     # Workflow Modules
     from workflow.core.exceptions import (
-        RunCommandsException,
+        RunCommandsExceptions,
         MessagesExceptions,
         InputExceptions
     )
@@ -55,14 +55,14 @@ except ImportError as error:
 
 def list_to_string(input_list=None):
     if input_list is None:
-        raise(InputExceptions.ExpectedList())
+        raise(InputExceptions.ListExpected())
 
     if type(input_list) is list:
         string = " "
         return(string.join(input_list))
 
     else:
-        raise(InputExceptions.ExpectedList())
+        raise(InputExceptions.ListExpected())
 
 
 class Colors:
