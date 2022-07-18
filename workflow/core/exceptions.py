@@ -36,5 +36,9 @@ class RunCommandsException(Exception):
     pass
 
 
-class MessagesException(Exception):
-    pass
+class MessagesExceptions(object):
+    class EmptyMessage(Exception):
+        pass
+
+    class InvalidMessage(Exception):
+        pass

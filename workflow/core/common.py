@@ -44,12 +44,29 @@ try:
     # Workflow Modules
     from workflow.core.exceptions import (
         RunCommandsException,
-        MessagesException
+        MessagesExceptions
     )
 
 except ImportError as error:
     print("Failed to import module(s): {0}".format(error))
     exit(1)
+
+
+def list_to_string(input_list):
+    try:
+        assert(isinstance(input_list, list))
+
+    except AssertionError:
+        error_message = "Input was not a list"
+        message = Messages(error)
+        message.crit()
+
+        return None
+
+    else:
+        string = " "
+        return(string.join(input_list))
+
 
 class Colors:
     reset = '\033[0m'
@@ -96,13 +113,15 @@ class Messages(object):
 
     def __init__(self, message=None, pipeline=True):
         if message is None:
-            raise(MessagesException("Empty message"))
+            raise(MessagesExceptions.EmptyMessage())
+#            raise(MessagesException("Empty message"))
 
         if type(message) is str:
             self.message = message
 
         else:
-            raise(MessagesException("Provided message was not a string"))
+            raise(MessagesExceptions.InvalidMessage())
+#            raise(MessagesException("Provided message was not a string"))
 
         self.pipeline = pipeline
 
@@ -159,3 +178,6 @@ class Messages(object):
 
         self.print_message()
 
+
+class RunCommands(object):
+    pass
