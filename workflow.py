@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 ###############################################################################
 # Copyright (c) 2022 GOTUNIXCODE
 # Copyright (c) 2022 Justin Ovens

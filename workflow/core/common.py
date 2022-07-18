@@ -42,6 +42,10 @@ try:
     )
 
     # Workflow Modules
+    from workflow.core.exceptions import (
+        RunCommandsException,
+        MessagesException
+    )
 
 except ImportError as error:
     print("Failed to import module(s): {0}".format(error))
@@ -82,3 +86,76 @@ class Colors:
         purple = '\033[45m'
         cyan = '\033[46m'
         lightgrey = '\033[47m'
+
+
+class Messages(object):
+    colors = None
+    message_type = None
+    message = None
+    pipeline = False
+
+    def __init__(self, message=None, pipeline=True):
+        if message is None:
+            raise(MessagesException("Empty message"))
+
+        if type(message) is str:
+            self.message = message
+
+        else:
+            raise(MessagesException("Provided message was not a string"))
+
+        self.pipeline = pipeline
+
+    def print_message(self):
+        if self.pipeline:
+            print("[{0}] - {1}".format(
+                self.message_type,
+                self.message
+            ))
+
+        else:
+            print("[{0}{1}] - {2}".format(
+                self.colors,
+                self.message_type,
+                self.message
+            ))
+
+    def info(self):
+        self.colors = "{0}{1}".format(
+            Colors.Foreground.cyan,
+            Colors.bold
+        )
+
+        self.message_type = "{0}{1}".format(
+            "INFO",
+            Colors.reset
+        )
+
+        self.print_message()
+
+    def warn(self):
+        self.colors = "{0}{1}".format(
+            Colors.Foreground.yellow,
+            Colors.bold
+        )
+
+        self.message_type = "{0}{1}".format(
+            "WARN",
+            Colors.reset
+        )
+
+        self.print_message()
+
+    def crit(self):
+        self.colors = "{0}{1}".format(
+            Colors.Foreground.red,
+            Colors.bold
+        )
+
+        self.message_type = "{0}{1}".format(
+            "CRIT",
+            Colors.reset
+        )
+
+        self.print_message()
+
