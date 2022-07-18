@@ -30,3 +30,27 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGE.
 ###############################################################################
+
+
+try:
+    # Python Modules
+    from venv import create as venv_create
+    from virtualenv import cli_run as virtualenv_cli_run
+    from argparse import ArgumentParser as argparse_ArgumentParser
+    from os import (
+        name as os_name,
+        environ as os_environ,
+        path as os_path
+    )
+    from sys import argv as sys_argv
+
+    # Workflow Modules
+    from workflow.configuration import Configuration
+
+except ImportError as error:
+    print("Failure to import module(s): {0}".format(error))
+    exit(1)
+
+
+class Workflow(object):
+    pass

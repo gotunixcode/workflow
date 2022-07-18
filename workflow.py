@@ -32,38 +32,123 @@
 # THE POSSIBILITY OF SUCH DAMAGE.
 ###############################################################################
 
-from workflow.core.common import RunCommands, Messages
 
 try:
-    command = RunCommands(
-        [
-            "ls",
-            "-la"
-        ]
+    # Python Modules
+    from pkg_resources import (
+        get_distribution as pkg_resources_get_distribution,
+        DistributionNotFound as pkg_resources_DistributionNotFound
+    )
+    from pip import __version__ as pip_version
+
+    # Workflow Modules
+    from workflow.configuration import Configuration
+    from workflow.core.common import (
+        Messages,
+        RunCommands
     )
 
-    command.run()
+except ImportError as error:
+    print("Failure to import module(s): {0}".format(error))
+    exit(1)
 
-except RunCommands.Exceptions.InvalidCommand as error:
-    print("ahh shit {0}".format(error))
 
+def check_environment():
+    """
+    We are going to check that any of the base python modules
+    we need are installed, and if not attempt to install them
+    automatically.
+    """
+    message = Messages("Checking required base python modules")
+    message.info()
 
-try:
-    command = RunCommands(
-        [
-            "/usr/bin/false"
-        ]
-    )
+    for package in Configuration.BASE_PACKAGES:
+        try:
+            dist = pkg_resources_get_distribution(package)
+            message = Messages("{0} {1} is installed".format(
+                dist.key, dist.version
+            ))
+            message.info()
+
+        except pkg_resources_DistributionNotFound:
+            message = Messages(
+                "{0} is not installed".format(
+                    package
+                )
+            )
+            message.warn()
+
+            command = RunCommands(
+                [
+                    "pip3",
+                    "install",
+                    package
+                ],
+                False
+            )
+
+            try:
+                command.run()
+
+            except RunCommands.Exceptions.RunFailure as error:
+                message = Messages(
+                    "Failed to install package: {0} {1}".format(
+                        package, error
+                    )
+                )
+                message.crit()
+                exit(1)
+
+            else:
+                message = Messages(
+                    "{0} installed successfully".format(package)
+                )
+                message.info()
+
+if __name__ == "__main__":
+    check_environment()
 
     try:
-        command.run()
+        from workflow.core.main import Workflow
 
-    except RunCommands.Exceptions.RunFailure as error:
-        message = Messages("Failed to run command: {0}".format(error))
-        message.crit()
+    except ImportError as error:
+        print("Failure to import module(s): {0}".format(error))
         exit(1)
 
-except RunCommands.Exceptions.InvalidCommand as error:
-    print("ahh shit {0}".format(error))
+    workflow = Workflow()
+
+#from workflow.core.common import RunCommands, Messages
+
+#try:
+#    command = RunCommands(
+#        [
+#            "ls",
+#            "-la"
+#        ]
+#    )
+
+#    command.run()
+
+#except RunCommands.Exceptions.InvalidCommand as error:
+#    print("ahh shit {0}".format(error))
+
+
+#try:
+#    command = RunCommands(
+#        [
+#            "/usr/bin/false"
+#        ]
+#    )
+
+#    try:
+#        command.run()
+
+#    except RunCommands.Exceptions.RunFailure as error:
+#        message = Messages("Failed to run command: {0}".format(error))
+#        message.crit()
+#        exit(1)
+
+#except RunCommands.Exceptions.InvalidCommand as error:
+#    print("ahh shit {0}".format(error))
 
 

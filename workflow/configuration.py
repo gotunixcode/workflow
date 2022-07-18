@@ -30,3 +30,28 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGE.
 ###############################################################################
+
+
+try:
+    # Python Modules
+    from pathlib import Path
+    from os import path as os_path
+
+    # Workflow Modules
+    from workflow.core.common import Messages
+
+except ImportError as error:
+    print("Failure to import module(s): {0}".format(error))
+    exit(1)
+
+
+class Configuration(object):
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    CONF_FILE = Path(__file__).resolve()
+    VENV_DIR = os_path.join(BASE_DIR, "venv")
+    BASE_PACKAGES = ["virtualenv"]
+    REQUIREMENTS_TXT = os_path.join(BASE_DIR, "requirements.txt")
+
+    info_message = "Loading configuration file: {0}".format(CONF_FILE)
+    message = Messages(info_message)
+    message.info()
