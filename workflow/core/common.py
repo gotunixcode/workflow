@@ -34,11 +34,10 @@
 
 try:
     # Python Modules
-    from os import environ
     from subprocess import (
-        run,
-        DEVNULL,
-        CalledProcessError
+        run as subprocess_run,
+        DEVNULL as subprocess_DEVNULL,
+        CalledProcessError as subprocess_CalledProcessError
     )
 
     # Workflow Modules
@@ -251,17 +250,17 @@ class RunCommands(object):
 
         try:
             if self.debug:
-                run_cmd = run(self.command, **kwargs, check=True)
+                run_cmd = subprocess_run(self.command, **kwargs, check=True)
 
             else:
-                run_cmd = run(
+                run_cmd = subprocess_run(
                     self.command,
                     **kwargs,
                     check=True,
-                    stdout=DEVNULL
+                    stdout=subprocess_DEVNULL
                 )
 
-        except CalledProcessError as error:
+        except subprocess_CalledProcessError as error:
             raise(
                 RunCommands.Exceptions.RunFailure(error)
             )

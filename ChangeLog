@@ -1,6 +1,7 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Updating imports on workflow/core/common.py
  * Removing workflow/core/exceptions.py
  * Moving exceptions into each class
  * Fixed broke import
