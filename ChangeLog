@@ -1,6 +1,8 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Adding addtional messages exceptions
+ * Updated changelog
  * Added Messages class to workflow/core/common.py
  * Updated changelog
  * Added RunCommandsException and MessagesException to workflow/core/exceptions.py
