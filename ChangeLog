@@ -1,6 +1,7 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Removing workflow/core/exceptions.py
  * Moving exceptions into each class
  * Fixed broke import
  * Updated list_to_string function to use exceptions

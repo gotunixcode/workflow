@@ -42,29 +42,47 @@ try:
     )
 
     # Workflow Modules
-    from workflow.core.exceptions import (
-        InputExceptions
-    )
 
 except ImportError as error:
     print("Failed to import module(s): {0}".format(error))
     exit(1)
 
 
-def list_to_string(input_list=None):
-    if input_list is None:
-        raise(InputExceptions.ListExpected())
+class Conversions(object):
+    class Exceptions(object):
+        class InvalidInput(Exception):
+            pass
 
-    if type(input_list) is list:
-        string = " "
-        return(string.join(input_list))
+    input = None
 
-    else:
-        raise(InputExceptions.ListExpected())
+    def __init__(self, input=None):
+        if input is None:
+            raise(
+                Conversions.Exceptions.InvalidInput(
+                    "No input was passed to convert"
+                )
+            )
 
+        self.input = input
 
-class Conversion(object):
-    pass
+    def list_to_string(self):
+        if self.input is None:
+            raise(
+                Conversions.Exceptions.InvalidInput(
+                    "No input was passed to convert"
+                )
+            )
+
+        if type(self.input) is list:
+            string = " "
+            return(string.join(self.input))
+
+        else:
+            raise(
+                Conversions.Exceptions.InvalidInput(
+                    "Provided input was not a list"
+                )
+            )
 
 class Colors:
     reset = '\033[0m'
@@ -215,7 +233,17 @@ class RunCommands(object):
             ))
 
     def run(self, **kwargs):
-        log = list_to_string(self.command)
+        conversion = Conversions(self.command)
+        try:
+            log = conversion.list_to_string()
+
+        except Conversions.Exceptions.InvalidInput as error:
+            message = Messages("Error converting list to string: {0}".format(
+                error
+            ))
+
+            message.crit()
+
         message = Messages(
             "Running command: [{0}]".format(log)
         )
