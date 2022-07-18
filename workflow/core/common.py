@@ -43,8 +43,6 @@ try:
 
     # Workflow Modules
     from workflow.core.exceptions import (
-        RunCommandsExceptions,
-        MessagesExceptions,
         InputExceptions
     )
 
@@ -64,6 +62,9 @@ def list_to_string(input_list=None):
     else:
         raise(InputExceptions.ListExpected())
 
+
+class Conversion(object):
+    pass
 
 class Colors:
     reset = '\033[0m'
@@ -103,6 +104,10 @@ class Colors:
 
 
 class Messages(object):
+    class Exceptions(object):
+        class InvalidMessage(Exception):
+            pass
+
     colors = None
     message_type = None
     message = None
@@ -110,12 +115,21 @@ class Messages(object):
 
     def __init__(self, message=None, pipeline=True):
         if message is None:
-            raise(MessagesExceptions.EmptyMessage())
+            raise(
+                Messages.Exceptions.InvalidMessage(
+                    "No message was passed"
+                )
+            )
 
         if type(message) is str:
             self.message = message
 
         else:
+            raise(
+                Messages.Exceptions.InvalidMessage(
+                    "Message was not passed as a string"
+                )
+            )
             raise(MessagesExceptions.InvalidMessage())
 
         self.pipeline = pipeline
@@ -175,4 +189,56 @@ class Messages(object):
 
 
 class RunCommands(object):
-    pass
+    class Exceptions(object):
+        class InvalidCommand(Exception):
+            pass
+
+        class RunFailure(Exception):
+            pass
+
+    debug = True
+    command = None
+
+    def __init__(self, command=None, debug=True):
+        if command is None:
+            raise(RunCommands.Exceptions.InvalidCommand(
+                "No command was issued"
+            ))
+
+        if type(command) is list:
+            self.command = command
+            self.debug = debug
+
+        else:
+            raise(RunCommands.Exceptions.InvalidCommand(
+                "We expected the command to be passed as a list"
+            ))
+
+    def run(self, **kwargs):
+        log = list_to_string(self.command)
+        message = Messages(
+            "Running command: [{0}]".format(log)
+        )
+        message.info()
+
+        try:
+            if self.debug:
+                run_cmd = run(self.command, **kwargs, check=True)
+
+            else:
+                run_cmd = run(
+                    self.command,
+                    **kwargs,
+                    check=True,
+                    stdout=DEVNULL
+                )
+
+        except CalledProcessError as error:
+            raise(
+                RunCommands.Exceptions.RunFailure(error)
+            )
+
+        else:
+            message = Messages("Command completed successfully")
+            message.info()
+

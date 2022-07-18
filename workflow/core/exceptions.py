@@ -32,22 +32,6 @@
 ###############################################################################
 
 
-class RunCommandsExceptions(object):
-    class InvalidCommand(Exception):
-        pass
-
-    class RunFailure(Exception):
-        pass
-
-
-class MessagesExceptions(object):
-    class EmptyMessage(Exception):
-        pass
-
-    class InvalidMessage(Exception):
-        pass
-
-
 class InputExceptions(object):
     class ListExpected(Exception):
         pass
