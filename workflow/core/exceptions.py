@@ -32,9 +32,18 @@
 ###############################################################################
 
 
-class RunCommandsException(Exception):
-    pass
+class InputExceptions(object):
+    class ListExpected(Exception):
+        pass
 
+    class DictExpected(Exception):
+        pass
 
-class MessagesException(Exception):
-    pass
+    class StringExpected(Exception):
+        pass
+
+    class IntExpected(Exception):
+        pass
+
+    class BoolExpected(Exception):
+        pass

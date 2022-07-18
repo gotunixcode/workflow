@@ -43,13 +43,28 @@ try:
 
     # Workflow Modules
     from workflow.core.exceptions import (
-        RunCommandsException,
-        MessagesException
+        InputExceptions
     )
 
 except ImportError as error:
     print("Failed to import module(s): {0}".format(error))
     exit(1)
+
+
+def list_to_string(input_list=None):
+    if input_list is None:
+        raise(InputExceptions.ListExpected())
+
+    if type(input_list) is list:
+        string = " "
+        return(string.join(input_list))
+
+    else:
+        raise(InputExceptions.ListExpected())
+
+
+class Conversion(object):
+    pass
 
 class Colors:
     reset = '\033[0m'
@@ -89,6 +104,10 @@ class Colors:
 
 
 class Messages(object):
+    class Exceptions(object):
+        class InvalidMessage(Exception):
+            pass
+
     colors = None
     message_type = None
     message = None
@@ -96,17 +115,26 @@ class Messages(object):
 
     def __init__(self, message=None, pipeline=True):
         if message is None:
-            raise(MessagesException("Empty message"))
+            raise(
+                Messages.Exceptions.InvalidMessage(
+                    "No message was passed"
+                )
+            )
 
         if type(message) is str:
             self.message = message
 
         else:
-            raise(MessagesException("Provided message was not a string"))
+            raise(
+                Messages.Exceptions.InvalidMessage(
+                    "Message was not passed as a string"
+                )
+            )
+            raise(MessagesExceptions.InvalidMessage())
 
         self.pipeline = pipeline
 
-    def print_message(self):
+    def __print_message(self):
         if self.pipeline:
             print("[{0}] - {1}".format(
                 self.message_type,
@@ -131,7 +159,7 @@ class Messages(object):
             Colors.reset
         )
 
-        self.print_message()
+        self.__print_message()
 
     def warn(self):
         self.colors = "{0}{1}".format(
@@ -144,7 +172,7 @@ class Messages(object):
             Colors.reset
         )
 
-        self.print_message()
+        self.__print_message()
 
     def crit(self):
         self.colors = "{0}{1}".format(
@@ -157,5 +185,60 @@ class Messages(object):
             Colors.reset
         )
 
-        self.print_message()
+        self.__print_message()
+
+
+class RunCommands(object):
+    class Exceptions(object):
+        class InvalidCommand(Exception):
+            pass
+
+        class RunFailure(Exception):
+            pass
+
+    debug = True
+    command = None
+
+    def __init__(self, command=None, debug=True):
+        if command is None:
+            raise(RunCommands.Exceptions.InvalidCommand(
+                "No command was issued"
+            ))
+
+        if type(command) is list:
+            self.command = command
+            self.debug = debug
+
+        else:
+            raise(RunCommands.Exceptions.InvalidCommand(
+                "We expected the command to be passed as a list"
+            ))
+
+    def run(self, **kwargs):
+        log = list_to_string(self.command)
+        message = Messages(
+            "Running command: [{0}]".format(log)
+        )
+        message.info()
+
+        try:
+            if self.debug:
+                run_cmd = run(self.command, **kwargs, check=True)
+
+            else:
+                run_cmd = run(
+                    self.command,
+                    **kwargs,
+                    check=True,
+                    stdout=DEVNULL
+                )
+
+        except CalledProcessError as error:
+            raise(
+                RunCommands.Exceptions.RunFailure(error)
+            )
+
+        else:
+            message = Messages("Command completed successfully")
+            message.info()
 

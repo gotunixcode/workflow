@@ -31,3 +31,39 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 # THE POSSIBILITY OF SUCH DAMAGE.
 ###############################################################################
+
+from workflow.core.common import RunCommands, Messages
+
+try:
+    command = RunCommands(
+        [
+            "ls",
+            "-la"
+        ]
+    )
+
+    command.run()
+
+except RunCommands.Exceptions.InvalidCommand as error:
+    print("ahh shit {0}".format(error))
+
+
+try:
+    command = RunCommands(
+        [
+            "/usr/bin/false"
+        ]
+    )
+
+    try:
+        command.run()
+
+    except RunCommands.Exceptions.RunFailure as error:
+        message = Messages("Failed to run command: {0}".format(error))
+        message.crit()
+        exit(1)
+
+except RunCommands.Exceptions.InvalidCommand as error:
+    print("ahh shit {0}".format(error))
+
+
