@@ -1,6 +1,8 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * [Wed Jul 20 19:43:36 2022 -0400] (Justin Ovens) - Added download for updates
+ * [Wed Jul 20 19:21:31 2022 -0400] (Justin Ovens) - working on backup and update class
  * [Tue Jul 19 23:05:37 2022 -0400] (Justin Ovens) - Fixed PEP8 errors
  * [Tue Jul 19 23:01:55 2022 -0400] (Justin Ovens) - Added main workflow command parser and virtualenv manager
  * [Mon Jul 18 17:30:17 2022 -0400] (Justin Ovens) - Added auto installer for base packages to workflow.py and started Workflow class in workflow/core/main.py
