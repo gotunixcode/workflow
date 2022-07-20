@@ -83,6 +83,7 @@ class Conversions(object):
                 )
             )
 
+
 class Colors:
     reset = '\033[0m'
     bold = '\033[01m'
@@ -268,4 +269,3 @@ class RunCommands(object):
         else:
             message = Messages("Command completed successfully")
             message.info()
-

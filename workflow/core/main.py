@@ -126,7 +126,8 @@ class Workflow(object):
         message += "{0}{1}".format(" "*4, "deploy") + "\n"
         message += "{0}{1}".format(" "*4, "destroy") + "\n"
         message += "{0}{1}".format(" "*4, "restart") + "\n"
-        message += "Run the following workflow to update the workflow scripts\n"
+        message += \
+            "Run the following workflow to update the workflow scripts\n"
         message += "{0}{1}".format(" "*4, "update") + "\n"
 
         return message
@@ -142,9 +143,10 @@ class Workflow(object):
         workflow = args.workflow.lower()
 
         if not hasattr(self, workflow):
-            crit_message = "The specified workflow [{0}] does not exist\n".format(
-                workflow
-            )
+            crit_message = \
+                "The specified workflow [{0}] does not exist\n".format(
+                    workflow
+                )
             message = Messages(crit_message)
             message.crit()
 
