@@ -1,41 +1,41 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
- * Fixed PEP8 errors
- * Added main workflow command parser and virtualenv manager
- * Added auto installer for base packages to workflow.py and started Workflow class in workflow/core/main.py
- * Updating imports on workflow/core/common.py
- * Removing workflow/core/exceptions.py
- * Moving exceptions into each class
- * Fixed broke import
- * Updated list_to_string function to use exceptions
- * Added InputExceptions
- * Adding RunCommands exceptions
- * Convert print_message to private in Messages class
- * Adding addtional messages exceptions
- * Added Messages class to workflow/core/common.py
- * Added RunCommandsException and MessagesException to workflow/core/exceptions.py
- * Added Colors class to workflow/core/common.py
- * Added workflow/parent/destroy.py
- * Added workflow/parent/deploy.py
- * Added workflow/parent/build.py
- * Added workflow/parent/__init__.py
- * Added workflow/core/update.py
- * Added workflow/core/main.py
- * Added workflow/core/exceptions.py
- * Added workflow/core/kubernetes.py
- * Added workflow/core/docker.py
- * Added workflow/core/common.py
- * Added workflow/childern/destroy.py
- * Added workflow/childern/deploy.py
- * Added workflow/childern/build.py
- * Added workflow/childern/__init__.py
- * Added workflow/configuration.py
- * Added workflow/__init__.py
- * Added workflow.py
- * Added requirements.txt
- * Added Header
- * Renamed TODO.md -> TODO
- * Added TODO.md
- * Added LICENSE and push.sh
- * Added README.md, .gitignore (Python) files
+ * [Tue Jul 19 23:05:37 2022 -0400] (Justin Ovens) - Fixed PEP8 errors
+ * [Tue Jul 19 23:01:55 2022 -0400] (Justin Ovens) - Added main workflow command parser and virtualenv manager
+ * [Mon Jul 18 17:30:17 2022 -0400] (Justin Ovens) - Added auto installer for base packages to workflow.py and started Workflow class in workflow/core/main.py
+ * [Mon Jul 18 16:57:54 2022 -0400] (Justin Ovens) - Updating imports on workflow/core/common.py
+ * [Mon Jul 18 14:45:34 2022 -0400] (Justin Ovens) - Removing workflow/core/exceptions.py
+ * [Sun Jul 17 23:43:10 2022 -0400] (Justin Ovens) - Moving exceptions into each class
+ * [Sun Jul 17 23:15:28 2022 -0400] (Justin Ovens) - Fixed broke import
+ * [Sun Jul 17 23:11:33 2022 -0400] (Justin Ovens) - Updated list_to_string function to use exceptions
+ * [Sun Jul 17 23:07:53 2022 -0400] (Justin Ovens) - Added InputExceptions
+ * [Sun Jul 17 23:05:57 2022 -0400] (Justin Ovens) - Adding RunCommands exceptions
+ * [Sun Jul 17 23:02:59 2022 -0400] (Justin Ovens) - Convert print_message to private in Messages class
+ * [Sun Jul 17 22:59:15 2022 -0400] (Justin Ovens) - Adding addtional messages exceptions
+ * [Sun Jul 17 21:15:59 2022 -0400] (Justin Ovens) - Added Messages class to workflow/core/common.py
+ * [Sun Jul 17 20:54:37 2022 -0400] (Justin Ovens) - Added RunCommandsException and MessagesException to workflow/core/exceptions.py
+ * [Sun Jul 17 20:53:28 2022 -0400] (Justin Ovens) - Added Colors class to workflow/core/common.py
+ * [Sun Jul 17 18:13:37 2022 -0400] (Justin Ovens) - Added workflow/parent/destroy.py
+ * [Sun Jul 17 18:13:30 2022 -0400] (Justin Ovens) - Added workflow/parent/deploy.py
+ * [Sun Jul 17 18:13:23 2022 -0400] (Justin Ovens) - Added workflow/parent/build.py
+ * [Sun Jul 17 18:13:15 2022 -0400] (Justin Ovens) - Added workflow/parent/__init__.py
+ * [Sun Jul 17 18:12:50 2022 -0400] (Justin Ovens) - Added workflow/core/update.py
+ * [Sun Jul 17 18:12:37 2022 -0400] (Justin Ovens) - Added workflow/core/main.py
+ * [Sun Jul 17 18:12:29 2022 -0400] (Justin Ovens) - Added workflow/core/exceptions.py
+ * [Sun Jul 17 18:12:12 2022 -0400] (Justin Ovens) - Added workflow/core/kubernetes.py
+ * [Sun Jul 17 18:11:57 2022 -0400] (Justin Ovens) - Added workflow/core/docker.py
+ * [Sun Jul 17 18:11:44 2022 -0400] (Justin Ovens) - Added workflow/core/common.py
+ * [Sun Jul 17 18:10:51 2022 -0400] (Justin Ovens) - Added workflow/childern/destroy.py
+ * [Sun Jul 17 18:10:38 2022 -0400] (Justin Ovens) - Added workflow/childern/deploy.py
+ * [Sun Jul 17 18:10:26 2022 -0400] (Justin Ovens) - Added workflow/childern/build.py
+ * [Sun Jul 17 18:10:13 2022 -0400] (Justin Ovens) - Added workflow/childern/__init__.py
+ * [Sun Jul 17 18:09:54 2022 -0400] (Justin Ovens) - Added workflow/configuration.py
+ * [Sun Jul 17 18:08:52 2022 -0400] (Justin Ovens) - Added workflow/__init__.py
+ * [Sun Jul 17 18:08:29 2022 -0400] (Justin Ovens) - Added workflow.py
+ * [Sun Jul 17 18:07:12 2022 -0400] (Justin Ovens) - Added requirements.txt
+ * [Sun Jul 17 18:06:14 2022 -0400] (Justin Ovens) - Added Header
+ * [Sun Jul 17 18:05:34 2022 -0400] (Justin Ovens) - Renamed TODO.md -> TODO
+ * [Sun Jul 17 18:05:12 2022 -0400] (Justin Ovens) - Added TODO.md
+ * [Sun Jul 17 18:00:01 2022 -0400] (Justin Ovens) - Added LICENSE and push.sh
+ * [Sun Jul 17 21:56:02 2022 +0000] (Justin Ovens) - Added README.md, .gitignore (Python) files
