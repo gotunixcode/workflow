@@ -59,6 +59,8 @@ REQUIREMENTS_TXT = os_path.join(BASE_DIR, "requirements.txt")
 BASE_PACKAGES = ["virtualenv"]
 
 AUTO_UPDATE = True
-UPDATE_URL = "https://api.github.com/repos/"
+RELEASE_URL = "https://api.github.com/repos/"
+UPDATE_URL = "https://raw.githubusercontent.com/"
+#UPDATE_URL = "https://api.github.com/repos/"
 UPDATE_URI = "/releases/latest"
 UPDATE_REPO = "gotunixcode/workflow"

@@ -66,6 +66,7 @@ class Update(object):
         class UpdateFailure(Exception):
             pass
 
+    release_url = None
     update_url = None
     update_uri = None
     update_repo = None
@@ -74,8 +75,8 @@ class Update(object):
     available_update = False
 
     def __init__(self):
-        if hasattr(configuration, "AUTO_UPDATE"):
-            self.auto_update = configuration.AUTO_UPDATE
+        if hasattr(configuration, "RELEASE_URL"):
+            self.release_url = configuration.RELEASE_URL
 
         if hasattr(configuration, "UPDATE_URL"):
             self.update_url = configuration.UPDATE_URL
@@ -89,9 +90,7 @@ class Update(object):
         self.__get_latest_release()
         self.__compare_versions()
         self.__backup()
-
-        if self.available_update and self.auto_update:
-            print("Running automatic updater")
+        self.update()
 
     def __versiontuple(self, version):
         return tuple(map(int, (version.split("."))))
@@ -121,12 +120,12 @@ class Update(object):
     def __get_latest_release(self):
         debug_message = \
             "Getting latest release version from: {0}{1}{2}".format(
-                self.update_url, self.update_repo, self.update_uri
+                self.release_url, self.update_repo, self.update_uri
             )
         message = Messages(debug_message)
         message.debug()
 
-        URL = self.update_url + self.update_repo + self.update_uri
+        URL = self.release_url + self.update_repo + self.update_uri
 
         response = requests_get(URL)
         if response.status_code == 200:
@@ -170,9 +169,50 @@ class Update(object):
             m.info()
             shutil_copy(src_path, dst_path)
 
-        m = Messages("Backing up: {0}{1}".format(configuration.BASE_DIR, "/workflow.py"))
-        m.info()
-        shutil_copy(os_path.join(configuration.BASE_DIR, "workflow.py"), backup_dir)
+        root_files = [
+            "ChangeLog",
+            "changelog.sh",
+            "push.sh",
+            "workflow.py"
+        ]
+
+        for root_file in root_files:
+            m = Messages("Backing up: {0}/{1}".format(configuration.BASE_DIR, root_file))
+            m.info()
+            shutil_copy(os_path.join(configuration.BASE_DIR, root_file), backup_dir)
+
+    def __download_file(self, file):
+        url = self.update_url + self.update_repo + "/" + self.current_release + "/" + file
+        with open(file, "wb") as file:
+            response = requests_get(url)
+            file.write(response.content)
 
     def update(self):
-        pass
+        core_files = os_listdir(os_path.join(configuration.BASE_DIR, "workflow/core"))
+        parent_files = os_listdir(os_path.join(configuration.BASE_DIR, "workflow/parent"))
+
+        root_files = [
+            "ChangeLog",
+            "changelog.sh",
+            "push.sh",
+            "workflow.sh"
+        ]
+
+        for root_file in root_files:
+            m = Messages("Updating: {0}/{1}".format(configuration.BASE_DIR, root_file))
+            m.info()
+            self.__download_file(root_file)
+
+        for core_file in core_files:
+            dst_file = os_path.join(configuration.BASE_DIR, "workflow/core", core_file)
+            m = Messages("Updating: {0}".format(dst_file))
+            m.info()
+            dl = os_path.join("workflow/core/", core_file)
+            self.__download_file(dl)
+
+        for parent_file in parent_files:
+            dst_file = os_path.join(configuration.BASE_DIR, "workflow/core", parent_file)
+            m = Messages("Updating: {0}".format(dst_file))
+            m.info()
+            dl = os_path.join("workflow/parent/", core_file)
+            self.__download_file(dl)
