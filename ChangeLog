@@ -1,6 +1,7 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * Added main workflow command parser and virtualenv manager
  * Added auto installer for base packages to workflow.py and started Workflow class in workflow/core/main.py
  * Updating imports on workflow/core/common.py
  * Removing workflow/core/exceptions.py
