@@ -46,6 +46,10 @@ try:
 
     # Workflow Modules
     from workflow.configuration import Configuration
+    from workflow.core.common import (
+        Messages,
+        RunCommands
+    )
 
 except ImportError as error:
     print("Failure to import module(s): {0}".format(error))
@@ -53,4 +57,116 @@ except ImportError as error:
 
 
 class Workflow(object):
-    pass
+    def __init__(self):
+        self.setup_virtualenv()
+        self.parse_workflows()
+
+    def setup_virtualenv(self):
+        info_message = "Setting up virtual environment"
+        message = Messages(info_message)
+        message.info()
+
+        cli = virtualenv_cli_run([Configuration.VENV_DIR])
+
+        if str(os_name).lower() == "nt":
+            venv_activator = os_path.join(
+                Configuration.VENV_DIR,
+                "Scripts",
+                "activate_this.py"
+            )
+        elif str(os_name).lower() == "posix":
+            venv_activator = os_path.join(
+                Configuration.VENV_DIR,
+                "bin",
+                "activate_this.py"
+            )
+        else:
+            crit_message = "Unsupported Operating System: {0}".format(
+                os_name.lower()
+            )
+            message = Messages(crit_message)
+            message.crit()
+
+        info_message = "Activating virtualenv: {0}".format(venv_activator)
+        message = Messages(info_message)
+        message.info()
+
+        exec(open(venv_activator).read(), {'__file__': venv_activator})
+
+        info_message = "Installing packages from {0} in virtualenv".format(
+            Configuration.REQUIREMENTS_TXT
+        )
+        message = Messages(info_message)
+        message.info()
+
+        command = RunCommands(
+            [
+                "bin/pip",
+                "install",
+                "-r",
+                Configuration.REQUIREMENTS_TXT
+            ],
+            False
+        )
+        try:
+            command.run(cwd=Configuration.VENV_DIR)
+
+        except RunCommands.Exceptions.RunFailure as error:
+            crit_message = "Failure installing dependencies: {0}".format(
+                error
+            )
+            message = Messages(crit_message)
+            message.info()
+            exit(1)
+
+    def usage_message(self):
+        message = "{0} <workflow> [<arguments>]\n\n".format(sys_argv[0])
+        message += "The following workflows are valid:\n"
+        message += "{0}{1}".format(" "*4, "build") + "\n"
+        message += "{0}{1}".format(" "*4, "deploy") + "\n"
+        message += "{0}{1}".format(" "*4, "destroy") + "\n"
+        message += "{0}{1}".format(" "*4, "restart") + "\n"
+        message += \
+            "Run the following workflow to update the workflow scripts\n"
+        message += "{0}{1}".format(" "*4, "update") + "\n"
+
+        return message
+
+    def parse_workflows(self):
+        parser = argparse_ArgumentParser(
+            description="CICD Workflows",
+            usage=self.usage_message(),
+        )
+
+        parser.add_argument("workflow", help="Workflow to run")
+        args = parser.parse_args(sys_argv[1:2])
+        workflow = args.workflow.lower()
+
+        if not hasattr(self, workflow):
+            crit_message = \
+                "The specified workflow [{0}] does not exist\n".format(
+                    workflow
+                )
+            message = Messages(crit_message)
+            message.crit()
+
+            print(self.usage_message())
+            exit(1)
+        else:
+            func = getattr(self, workflow)
+            func()
+
+    def build(self):
+        print("Build workflow")
+
+    def deploy(self):
+        print("Deploy workflow")
+
+    def destroy(self):
+        print("Destroy workflow")
+
+    def restart(self):
+        print("Restart workflow")
+
+    def update(self):
+        print("Update workflow")
