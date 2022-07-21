@@ -121,7 +121,6 @@ class Workflow(object):
             exit(1)
 
     def usage_message(self):
-        print(" ")
         message = "{0} <workflow> [<arguments>]\n\n".format(sys_argv[0])
         message += "The following workflows are valid:\n"
         message += "{0}{1}".format(" "*4, "build") + "\n"
