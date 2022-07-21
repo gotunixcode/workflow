@@ -1,6 +1,7 @@
 CHANGELOG
 ----------------------
 [version/0.1.0]
+ * [Wed Jul 20 20:30:25 2022 -0400] (Justin Ovens) - Added missing file from update
  * [Wed Jul 20 20:25:49 2022 -0400] (Justin Ovens) - Fixing typeo
  * [Wed Jul 20 20:21:51 2022 -0400] (Justin Ovens) - Enabled update command
  * [Wed Jul 20 19:43:36 2022 -0400] (Justin Ovens) - Added download for updates
