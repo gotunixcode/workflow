@@ -61,7 +61,7 @@ def check_environment():
     automatically.
     """
     message = Messages("Checking required base python modules")
-    message.debug()
+    message.info()
 
     for package in configuration.BASE_PACKAGES:
         try:
@@ -69,7 +69,7 @@ def check_environment():
             message = Messages("{0} {1} is installed".format(
                 dist.key, dist.version
             ))
-            message.debug()
+            message.info()
 
         except pkg_resources_DistributionNotFound:
             message = Messages(
@@ -77,7 +77,7 @@ def check_environment():
                     package
                 )
             )
-            message.debug()
+            message.info()
 
             command = RunCommands(
                 [
@@ -104,7 +104,7 @@ def check_environment():
                 message = Messages(
                     "{0} installed successfully".format(package)
                 )
-                message.debug()
+                message.info()
 
 if __name__ == "__main__":
     check_environment()
@@ -117,13 +117,12 @@ if __name__ == "__main__":
         print("Failure to import module(s): {0}".format(error))
         exit(1)
 
-#    message = Messages("Workflow current version: {0}".format(VERSION))
-#    message.info()
-
     update = Update()
-#    latest_release = update.show_latest_release()
-#    message = Messages("Workflow latest release: {0}".format(latest_release))
-#    message.info()
+    update.check_updates()
+    if update.updates_available:
+        message = "There are updates available"
+        m = Messages(message)
+        m.warn()
 
     workflow = Workflow()
 

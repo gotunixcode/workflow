@@ -155,8 +155,9 @@ class Messages(object):
 
     def __print_message(self):
         if self.pipeline:
-            print("[{0}] - {1}".format(
+            print("{0}{1} - {2}".format(
                 self.message_type,
+                " "*2,
                 self.message
             ))
 
@@ -174,7 +175,7 @@ class Messages(object):
         )
 
         self.message_type = "{0}{1}".format(
-            "INFO",
+            "▶️",
             Colors.reset
         )
 
@@ -187,7 +188,7 @@ class Messages(object):
         )
 
         self.message_type = "{0}{1}".format(
-            "WARN",
+            "⚠️",
             Colors.reset
         )
 
@@ -200,7 +201,7 @@ class Messages(object):
         )
 
         self.message_type = "{0}{1}".format(
-            "CRIT",
+            "❌",
             Colors.reset
         )
 

@@ -50,7 +50,7 @@ try:
         Messages,
         RunCommands
     )
-#    from workflow.core.update import Updates
+    from workflow.core.update import Update
 
 except ImportError as error:
     print("Failure to import module(s): {0}".format(error))
@@ -121,6 +121,7 @@ class Workflow(object):
             exit(1)
 
     def usage_message(self):
+        print(" ")
         message = "{0} <workflow> [<arguments>]\n\n".format(sys_argv[0])
         message += "The following workflows are valid:\n"
         message += "{0}{1}".format(" "*4, "build") + "\n"
@@ -130,7 +131,6 @@ class Workflow(object):
         message += \
             "Run the following workflow to update the workflow scripts\n"
         message += "{0}{1}".format(" "*4, "update") + "\n"
-
         return message
 
     def parse_workflows(self):
@@ -170,4 +170,6 @@ class Workflow(object):
         print("Restart workflow")
 
     def update(self):
-        print("Update workflow")
+        update = Update()
+        update.check_updates()
+        update.update()
