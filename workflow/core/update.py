@@ -172,6 +172,7 @@ class Update(object):
             "ChangeLog",
             "changelog.sh",
             "push.sh",
+            "workflow/__init__.py",
             "workflow.py"
         ]
 
@@ -201,6 +202,7 @@ class Update(object):
                 "ChangeLog",
                 "changelog.sh",
                 "push.sh",
+                "workflow/__init__.py",
                 "workflow.py"
             ]
 
