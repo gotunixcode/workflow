@@ -201,7 +201,7 @@ class Update(object):
                 "ChangeLog",
                 "changelog.sh",
                 "push.sh",
-                "workflow.sh"
+                "workflow.py"
             ]
 
             for root_file in root_files:
