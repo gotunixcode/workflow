@@ -72,7 +72,7 @@ class Update(object):
     update_repo = None
     auto_update = False
     current_release = None
-    available_update = False
+    updates_available = False
 
     def __init__(self):
         if hasattr(configuration, "RELEASE_URL"):
@@ -88,14 +88,14 @@ class Update(object):
             self.update_repo = configuration.UPDATE_REPO
 
         self.__get_latest_release()
-        self.__compare_versions()
-        self.__backup()
-        self.update()
+#        self.__compare_versions()
+#        self.__backup()
+#        self.update()
 
     def __versiontuple(self, version):
         return tuple(map(int, (version.split("."))))
 
-    def __compare_versions(self):
+    def check_updates(self):
         current_release = None
         if VERSION.startswith('v'):
             current_version = VERSION[1:]
@@ -104,35 +104,34 @@ class Update(object):
             if self.current_release.startswith('v'):
                 current_release = self.current_release[1:]
 
-        message = Messages("Running release: {0}".format(current_version))
-        message.debug()
-        message = Messages("Current release: {0}".format(current_release))
-        message.debug()
+        message = "You are running: {0} - The latest release: {1}".format(
+            current_version,
+            current_release
+        )
+        m = Messages(message)
+        m.info()
 
-        if self.__versiontuple(current_version) >= self.__versiontuple(current_release):
-            message = Messages("No updates available")
+        if self.current_release is not None:
+            if self.__versiontuple(current_version) >= self.__versiontuple(current_release):
+                self.updates_available = False
+            else:
+                self.updates_available = True
         else:
-            message = Messages("There are updates available")
-            self.available_update = True
-
-        message.info()
+            self.updates_available = False
 
     def __get_latest_release(self):
-        debug_message = \
+        info_message = \
             "Getting latest release version from: {0}{1}{2}".format(
                 self.release_url, self.update_repo, self.update_uri
             )
-        message = Messages(debug_message)
-        message.debug()
+        message = Messages(info_message)
+        message.info()
 
         URL = self.release_url + self.update_repo + self.update_uri
 
         response = requests_get(URL)
         if response.status_code == 200:
             self.current_release = response.json()["name"]
-
-    def check_updates(self):
-        pass
 
     def __backup(self):
         backup_root = os_path.join(configuration.BASE_DIR, "backups")
@@ -188,31 +187,43 @@ class Update(object):
             file.write(response.content)
 
     def update(self):
-        core_files = os_listdir(os_path.join(configuration.BASE_DIR, "workflow/core"))
-        parent_files = os_listdir(os_path.join(configuration.BASE_DIR, "workflow/parent"))
-
-        root_files = [
-            "ChangeLog",
-            "changelog.sh",
-            "push.sh",
-            "workflow.sh"
-        ]
-
-        for root_file in root_files:
-            m = Messages("Updating: {0}/{1}".format(configuration.BASE_DIR, root_file))
+        if self.updates_available:
+            message = "Updating from {0} to {1}".format(VERSION, self.current_release)
+            m = Messages(message)
             m.info()
-            self.__download_file(root_file)
 
-        for core_file in core_files:
-            dst_file = os_path.join(configuration.BASE_DIR, "workflow/core", core_file)
-            m = Messages("Updating: {0}".format(dst_file))
-            m.info()
-            dl = os_path.join("workflow/core/", core_file)
-            self.__download_file(dl)
+            self.__backup()
 
-        for parent_file in parent_files:
-            dst_file = os_path.join(configuration.BASE_DIR, "workflow/core", parent_file)
-            m = Messages("Updating: {0}".format(dst_file))
+            core_files = os_listdir(os_path.join(configuration.BASE_DIR, "workflow/core"))
+            parent_files = os_listdir(os_path.join(configuration.BASE_DIR, "workflow/parent"))
+
+            root_files = [
+                "ChangeLog",
+                "changelog.sh",
+                "push.sh",
+                "workflow.sh"
+            ]
+
+            for root_file in root_files:
+                m = Messages("Updating: {0}/{1}".format(configuration.BASE_DIR, root_file))
+                m.info()
+                self.__download_file(root_file)
+
+            for core_file in core_files:
+                dst_file = os_path.join(configuration.BASE_DIR, "workflow/core", core_file)
+                m = Messages("Updating: {0}".format(dst_file))
+                m.info()
+                dl = os_path.join("workflow/core/", core_file)
+                self.__download_file(dl)
+
+            for parent_file in parent_files:
+                dst_file = os_path.join(configuration.BASE_DIR, "workflow/core", parent_file)
+                m = Messages("Updating: {0}".format(dst_file))
+                m.info()
+                dl = os_path.join("workflow/parent/", core_file)
+                self.__download_file(dl)
+
+        else:
+            message = "There are no updates available"
+            m = Messages(message)
             m.info()
-            dl = os_path.join("workflow/parent/", core_file)
-            self.__download_file(dl)
